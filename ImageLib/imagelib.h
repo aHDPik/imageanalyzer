@@ -9,7 +9,7 @@ namespace imagelib {
 		int height;
 	};
 
-	Detection detect(char* image, int width, int height);
+	Detection detect(unsigned char* image, int width, int height);
 
 }
 

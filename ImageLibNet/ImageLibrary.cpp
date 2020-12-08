@@ -25,11 +25,11 @@ namespace ImageLib {
 		// Set the new format to Gray32Float (grayscale).
 		newFormatedBitmapSource->DestinationFormat = PixelFormats::Bgr24;
 		newFormatedBitmapSource->EndInit();
-		array<char>^ pixels = gcnew array<char>(img->PixelHeight * img->PixelWidth * 3);
+		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
 		newFormatedBitmapSource->CopyPixels(pixels, img->PixelWidth * 3, 0);
 
-		pin_ptr<char> pixelsPin = &pixels[0];
-		char* pixelsNative = pixelsPin;
+		pin_ptr<unsigned char> pixelsPin = &pixels[0];
+		unsigned char* pixelsNative = pixelsPin;
 
 		imagelib::Detection res = imagelib::detect(pixelsNative, img->Width, img->Height);
 		Detection out;
