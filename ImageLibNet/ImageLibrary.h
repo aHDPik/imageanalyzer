@@ -12,9 +12,11 @@ namespace ImageLib {
 
 	public ref class ImageLibrary
 	{
+	private:
+		static System::Windows::Media::Imaging::FormatConvertedBitmap^ ToBgr24(System::Windows::Media::Imaging::WriteableBitmap^ img);
 	public:
-		static Detection Detect(System::Windows::Media::Imaging::BitmapImage^ img);
-
+		static Detection Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
+		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
 
 
 	};

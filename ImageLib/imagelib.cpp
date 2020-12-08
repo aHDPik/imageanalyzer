@@ -9,15 +9,15 @@ namespace imagelib {
     }
 
     //я не понял, чем задается фото, по этому пока что так. Более менее пойму, когда будет функция записи пикселей
-    void noise(/* тут должно быть фото, */int width, int height, int percent) {
+    void noise(unsigned char* image, int width, int height, double percent) {
         srand(rand()%100);
-        float noise = percent;
+        double noise = percent;
         int sizeImg = width * height;
         for (int i = 0; i < sizeImg * noise; i++) {
             int size = rand() % 4;
             int x = rand() % width, y = rand() % height;
             for (int j = 0; j < size; j++){
-                ///*тут опять же фото*/.data[index(x, y, image.cols) + j] = rand() % 256;
+                image[index(x, y, width) + j] = rand() % 256;
             }
         }
     }

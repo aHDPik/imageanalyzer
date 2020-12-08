@@ -9,13 +9,27 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть..." Name="openFileMenu" Click="openFileMenu_Click"/>
             </MenuItem>
         </Menu>
-        <Image Name="image" Grid.Row="1"/>
+        <Image Name="image" Grid.Row="2" Grid.Column="0"/>
+        <Image Name="imageNoised" Grid.Row="2" Grid.Column="1"/>
+        <Image Name="imageDetected" Grid.Row="2" Grid.Column="2"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <TextBlock Padding="1">
+                Процент шума
+            </TextBlock>
+            <TextBox Name="noiseTb" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.1</TextBox>
+        </StackPanel>
     </Grid>
 </Window>

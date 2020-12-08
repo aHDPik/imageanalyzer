@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ImageLib;
+using System.Globalization;
 
 namespace ImageAnalyzer
 {
@@ -22,7 +23,7 @@ namespace ImageAnalyzer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BitmapImage img;
+        private WriteableBitmap img;
 
         public MainWindow()
         {
@@ -35,9 +36,12 @@ namespace ImageAnalyzer
             ofd.Filter = "Файлы рисунков (*.bmp, *.jpg, *.png)|*.bmp;*.jpg;*.png";
             if (ofd.ShowDialog().Value)
             {
-                img = new BitmapImage(new Uri(ofd.FileName));
+                img = new WriteableBitmap(new BitmapImage(new Uri(ofd.FileName)));
                 image.Source = img;
-                Detection det = ImageLibrary.Detect(img);
+                double percent = double.Parse(noiseTb.Text, CultureInfo.InvariantCulture);
+                WriteableBitmap noised = ImageLibrary.Noise(img, percent);
+                imageNoised.Source = noised;
+                Detection det = ImageLibrary.Detect(noised);
                 MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
                 FormatConvertedBitmap  bmp32 = new FormatConvertedBitmap();
 
@@ -54,7 +58,7 @@ namespace ImageAnalyzer
                 bmp32.EndInit();
                 WriteableBitmap wbmp = new WriteableBitmap(bmp32);
                 wbmp.DrawRectangle(det.x, det.y, det.x + det.width, det.y + det.height, Colors.Red);
-                image.Source = wbmp;
+                imageDetected.Source = wbmp;
             }
         }
     }
