@@ -31,6 +31,10 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
+		
+		//тут должна быть функция шума 
+		//noise(фото, img->Width, img->Height, 0.1/*10%*/ )
+
 		imagelib::Detection res = imagelib::detect(pixelsNative, img->Width, img->Height);
 		Detection out;
 		out.x = res.x;

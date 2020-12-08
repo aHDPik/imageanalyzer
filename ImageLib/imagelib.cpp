@@ -8,11 +8,23 @@ namespace imagelib {
         return ((x + y * width) * 3);
     }
 
+    //я не понял, чем задается фото, по этому пока что так. Более менее пойму, когда будет функция записи пикселей
+    void noise(/* тут должно быть фото, */int width, int height, int percent) {
+        srand(rand()%100);
+        float noise = percent;
+        int sizeImg = width * height;
+        for (int i = 0; i < sizeImg * noise; i++) {
+            int size = rand() % 4;
+            int x = rand() % width, y = rand() % height;
+            for (int j = 0; j < size; j++){
+                ///*тут опять же фото*/.data[index(x, y, image.cols) + j] = rand() % 256;
+            }
+        }
+    }
+
     Detection detect(unsigned char* image, int width, int height)
     {
             int blue=0, green=0, red=0;
-            //std::cout << "Put color a object (blue[b] green[g] red[r]; (0 <= b,g,r <= 255)): bbb ggg rrr ---> ";
-            //std::cin >> blue >> green >> red;
             std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
             std::vector<int> ourColorMax = { blue + 10, green + 10, red + 10 };
             std::vector<int> thisColor;
