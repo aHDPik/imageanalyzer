@@ -39,8 +39,21 @@ namespace ImageAnalyzer
                 image.Source = img;
                 Detection det = ImageLibrary.Detect(img);
                 MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
-                WriteableBitmap wbmp = new WriteableBitmap(img);
-                wbmp.DrawRectangle(det.x, det.y, det.width, det.height, Colors.Red);
+                FormatConvertedBitmap  bmp32 = new FormatConvertedBitmap();
+
+                // BitmapSource objects like FormatConvertedBitmap can only have their properties
+                // changed within a BeginInit/EndInit block.
+                bmp32.BeginInit();
+
+                // Use the BitmapSource object defined above as the source for this new
+                // BitmapSource (chain the BitmapSource objects together).
+                bmp32.Source = img;
+
+                // Set the new format to Gray32Float (grayscale).
+                bmp32.DestinationFormat = PixelFormats.Bgr32;
+                bmp32.EndInit();
+                WriteableBitmap wbmp = new WriteableBitmap(bmp32);
+                wbmp.DrawRectangle(det.x, det.y, det.x + det.width, det.y + det.height, Colors.Red);
                 image.Source = wbmp;
             }
         }
