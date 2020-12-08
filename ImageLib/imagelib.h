@@ -11,5 +11,7 @@ namespace imagelib {
 
 	Detection detect(unsigned char* image, int width, int height);
 
+	int index(int x, int y, int width);
+
 }
 

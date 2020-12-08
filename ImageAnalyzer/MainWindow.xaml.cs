@@ -40,7 +40,7 @@ namespace ImageAnalyzer
                 Detection det = ImageLibrary.Detect(img);
                 MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
                 WriteableBitmap wbmp = new WriteableBitmap(img);
-                wbmp.DrawRectangle(det.x, det.y, det.x + det.width, det.y + det.height, Colors.Red);
+                wbmp.DrawRectangle(det.x, det.y, det.width, det.height, Colors.Red);
                 image.Source = wbmp;
             }
         }
