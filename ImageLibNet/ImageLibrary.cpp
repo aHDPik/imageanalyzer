@@ -25,7 +25,7 @@ namespace ImageLib {
 		return bgr24;
 	}
 
-	Detection ImageLibrary::Detect(WriteableBitmap^ img)
+	std::vector<Detection> ImageLibrary::Detect(WriteableBitmap^ img)
 	{
 		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
 		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
@@ -34,13 +34,18 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
-		imagelib::Detection res = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
-		Detection out;
-		out.x = res.x;
-		out.y = res.y;
-		out.width = res.width;
-		out.height = res.height;
-		return out;
+		std::vector<imagelib::Detection> res_arr = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
+		std::vector<Detection> out_arr;
+		for (int i = 0; i < res_arr.size(); i++) {
+			Detection out;
+			out.x = res_arr[i].x;
+			out.y = res_arr[i].y;
+			out.width = res_arr[i].width;
+			out.height = res_arr[i].height;
+			out_arr.push_back(out);
+		}
+
+		return out_arr;
 	}
 
 	WriteableBitmap^ ImageLibrary::Noise(WriteableBitmap^ img, double percent)

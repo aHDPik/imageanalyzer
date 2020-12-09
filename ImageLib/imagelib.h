@@ -12,7 +12,7 @@ namespace imagelib {
 		int height;
 	};
 
-	Detection detect(unsigned char* image, int width, int height);
+	std::vector<Detection> detect(unsigned char* image, int width, int height);
 
 	void noise(unsigned char* image, int width, int height, double percent);
 

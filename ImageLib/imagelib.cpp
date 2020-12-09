@@ -19,13 +19,15 @@ namespace imagelib {
         }
     }
 
-    Detection detect(unsigned char* image, int width, int height)
+    std::vector<Detection> detect(unsigned char* image, int width, int height)
     {
+        std::vector<Detection> objects;
             int blue=0, green=0, red=0;
             std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
             std::vector<int> ourColorMax = { blue + 10, green + 10, red + 10 };
             std::vector<int> thisColor;
             int x1_flag = -1, y1_flag = -1, x2_flag = -1, y2_flag = -1, i;
+            bool flag_str=false;
             for (int y = 0; y < height; y++)
                 for (int x = 0; x < width; x++) {
                     int ind = index(x, y, width);
@@ -52,7 +54,9 @@ namespace imagelib {
 
                 }
             Detection res = { x1_flag ,y1_flag, x2_flag - x1_flag, y2_flag - y1_flag };
-            return res;
+            objects.push_back(res);
+           
+            return objects;
     }
 
     void modify_image(unsigned char* image, int width, int height, Matrix M) {

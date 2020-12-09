@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 
 namespace ImageLib {
 
@@ -22,7 +23,7 @@ namespace ImageLib {
 	private:
 		static System::Windows::Media::Imaging::FormatConvertedBitmap^ ToBgr24(System::Windows::Media::Imaging::WriteableBitmap^ img);
 	public:
-		static Detection Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
+		static std::vector<Detection> Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
 		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
 		static System::Windows::Media::Imaging::WriteableBitmap^ ApplyMatrix(System::Windows::Media::Imaging::WriteableBitmap^ img, Matrix m);
 	};
