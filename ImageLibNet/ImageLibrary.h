@@ -17,8 +17,7 @@ namespace ImageLib {
 	public:
 		static Detection Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
 		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
-
-
+		static System::Windows::Media::Imaging::WriteableBitmap^ Matrix(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
 	};
 
 }

@@ -34,10 +34,6 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
-		
-		//тут должна быть функция шума 
-		//noise(фото, img->Width, img->Height, 0.1/*10%*/ )
-
 		imagelib::Detection res = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
 		Detection out;
 		out.x = res.x;
@@ -63,4 +59,19 @@ namespace ImageLib {
 		return res;
 	}
 
+	WriteableBitmap^ ImageLibrary::Matrix(WriteableBitmap^ img, double percent)
+	{
+		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
+		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
+		bgr24->CopyPixels(pixels, img->PixelWidth * 3, 0);
+
+		pin_ptr<unsigned char> pixelsPin = &pixels[0];
+		unsigned char* pixelsNative = pixelsPin;
+
+		imagelib::modify_image(pixelsNative, img->PixelWidth, img->PixelHeight);
+
+		WriteableBitmap^ res = gcnew WriteableBitmap(img->PixelWidth, img->PixelHeight, 92, 92, PixelFormats::Bgr24, nullptr);
+		res->WritePixels(System::Windows::Int32Rect(0, 0, img->PixelWidth, img->PixelHeight), pixels, img->PixelWidth * 3, 0);
+		return res;
+	}
 }

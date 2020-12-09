@@ -41,6 +41,10 @@ namespace ImageAnalyzer
                 double percent = double.Parse(noiseTb.Text, CultureInfo.InvariantCulture);
                 WriteableBitmap noised = ImageLibrary.Noise(img, percent);
                 imageNoised.Source = noised;
+
+                //WriteableBitmap matrix = ImageLibrary.Matrix(img, percent);
+                //imageMatrix.Source = matrix;
+
                 Detection det = ImageLibrary.Detect(noised);
                 MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
                 FormatConvertedBitmap  bmp32 = new FormatConvertedBitmap();
