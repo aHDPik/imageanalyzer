@@ -10,6 +10,13 @@ namespace ImageLib {
 		int height;
 	};
 
+	public value struct Matrix {
+	public:
+		array<double>^ arr1;
+		array<double>^ arr2;
+	};
+
+
 	public ref class ImageLibrary
 	{
 	private:
@@ -17,7 +24,7 @@ namespace ImageLib {
 	public:
 		static Detection Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
 		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
-		static System::Windows::Media::Imaging::WriteableBitmap^ Matrix(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
+		static System::Windows::Media::Imaging::WriteableBitmap^ ApplyMatrix(System::Windows::Media::Imaging::WriteableBitmap^ img, Matrix m);
 	};
 
 }

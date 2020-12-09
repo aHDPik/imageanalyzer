@@ -10,26 +10,36 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть..." Name="openFileMenu" Click="openFileMenu_Click"/>
             </MenuItem>
         </Menu>
         <Image Name="image" Grid.Row="2" Grid.Column="0"/>
         <Image Name="imageNoised" Grid.Row="2" Grid.Column="1"/>
-        <Image Name="imageDetected" Grid.Row="2" Grid.Column="2"/>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+        <Image Name="imageFiltered" Grid.Row="2" Grid.Column="2"/>
+        <Image Name="imageDetected" Grid.Row="2" Grid.Column="3"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
             <TextBlock Padding="1">
                 Процент шума
             </TextBlock>
             <TextBox Name="noiseTb" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.1</TextBox>
+            <TextBlock Padding="1">
+                Матрица 1
+            </TextBlock>
+            <TextBox Name="m1Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.3,0.3</TextBox>
+            <TextBlock Padding="1">
+                Матрица 2
+            </TextBlock>
+            <TextBox Name="m2Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.3,0.3</TextBox>
         </StackPanel>
     </Grid>
 </Window>

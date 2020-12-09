@@ -59,7 +59,7 @@ namespace ImageLib {
 		return res;
 	}
 
-	WriteableBitmap^ ImageLibrary::Matrix(WriteableBitmap^ img, double percent)
+	System::Windows::Media::Imaging::WriteableBitmap^ ImageLibrary::ApplyMatrix(System::Windows::Media::Imaging::WriteableBitmap^ img, Matrix m)
 	{
 		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
 		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
@@ -67,9 +67,19 @@ namespace ImageLib {
 
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
-
-		imagelib::modify_image(pixelsNative, img->PixelWidth, img->PixelHeight);
-
+		imagelib::Matrix mNative;
+		for (int i = 0; i < m.arr1->Length; i++) {
+			double val = m.arr1[i];
+			mNative.arr1.push_back(val);
+		}
+		for (int i = 0; i < m.arr2->Length; i++) {
+			double val = m.arr2[i];
+			mNative.arr2.push_back(val);
+		}
+		mNative.width = m.arr1->Length;
+		mNative.height = m.arr2->Length;
+		mNative.name = "Gui input";
+		imagelib::modify_image(pixelsNative, img->PixelWidth, img->PixelHeight, mNative);
 		WriteableBitmap^ res = gcnew WriteableBitmap(img->PixelWidth, img->PixelHeight, 92, 92, PixelFormats::Bgr24, nullptr);
 		res->WritePixels(System::Windows::Int32Rect(0, 0, img->PixelWidth, img->PixelHeight), pixels, img->PixelWidth * 3, 0);
 		return res;

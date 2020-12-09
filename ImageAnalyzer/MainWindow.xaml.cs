@@ -42,10 +42,14 @@ namespace ImageAnalyzer
                 WriteableBitmap noised = ImageLibrary.Noise(img, percent);
                 imageNoised.Source = noised;
 
-                //WriteableBitmap matrix = ImageLibrary.Matrix(img, percent);
-                //imageMatrix.Source = matrix;
+                ImageLib.Matrix m = new ImageLib.Matrix();
+                m.arr1 = m1Tb.Text.Split(',').ToList().ConvertAll(n => double.Parse(n, CultureInfo.InvariantCulture)).ToArray();
+                m.arr2 = m2Tb.Text.Split(',').ToList().ConvertAll(n => double.Parse(n, CultureInfo.InvariantCulture)).ToArray();
 
-                Detection det = ImageLibrary.Detect(noised);
+                WriteableBitmap filtered = ImageLibrary.ApplyMatrix(img, m);
+                imageFiltered.Source = filtered;
+
+                Detection det = ImageLibrary.Detect(filtered);
                 MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
                 FormatConvertedBitmap  bmp32 = new FormatConvertedBitmap();
 
