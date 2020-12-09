@@ -28,6 +28,8 @@ namespace imagelib {
 
 	unsigned char clamp(double val);
 
-	Matrix modify_image(unsigned char* image, int width, int height, Matrix M);
+	void modify_image(unsigned char* image, int width, int height, Matrix M);
+
+	void copy_edges(unsigned char* image, unsigned char* bigImage, std::uint32_t width, std::uint32_t height, Matrix M);
 }
 

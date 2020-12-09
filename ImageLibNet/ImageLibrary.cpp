@@ -67,6 +67,7 @@ namespace ImageLib {
 
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
+
 		imagelib::Matrix mNative;
 		for (int i = 0; i < m.arr1->Length; i++) {
 			double val = m.arr1[i];
@@ -76,6 +77,7 @@ namespace ImageLib {
 			double val = m.arr2[i];
 			mNative.arr2.push_back(val);
 		}
+
 		mNative.width = m.arr1->Length;
 		mNative.height = m.arr2->Length;
 		mNative.name = "Gui input";
