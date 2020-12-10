@@ -4,6 +4,7 @@
 
 using namespace System::Windows::Media::Imaging;
 using namespace System::Windows::Media;
+using namespace System::Collections::Generic;
 
 namespace ImageLib {
 
@@ -25,7 +26,7 @@ namespace ImageLib {
 		return bgr24;
 	}
 
-	std::vector<Detection> ImageLibrary::Detect(WriteableBitmap^ img)
+	List<Detection>^ ImageLibrary::Detect(WriteableBitmap^ img)
 	{
 		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
 		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
@@ -34,18 +35,18 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
-		std::vector<imagelib::Detection> res_arr = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
-		std::vector<Detection> out_arr;
-		for (int i = 0; i < res_arr.size(); i++) {
+		std::vector<imagelib::Detection> resArr = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
+		List<Detection>^ outArr = gcnew List<Detection>();
+		for (int i = 0; i < resArr.size(); i++) {
 			Detection out;
-			out.x = res_arr[i].x;
-			out.y = res_arr[i].y;
-			out.width = res_arr[i].width;
-			out.height = res_arr[i].height;
-			out_arr.push_back(out);
+			out.x = resArr[i].x;
+			out.y = resArr[i].y;
+			out.width = resArr[i].width;
+			out.height = resArr[i].height;
+			outArr->Add(out);
 		}
 
-		return out_arr;
+		return outArr;
 	}
 
 	WriteableBitmap^ ImageLibrary::Noise(WriteableBitmap^ img, double percent)

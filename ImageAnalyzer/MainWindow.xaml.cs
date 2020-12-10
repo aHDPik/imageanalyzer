@@ -49,9 +49,14 @@ namespace ImageAnalyzer
                 WriteableBitmap filtered = ImageLibrary.ApplyMatrix(noised, m);
                 imageFiltered.Source = filtered;
 
-                Detection det = ImageLibrary.Detect(filtered);
-                MessageBox.Show($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
-                FormatConvertedBitmap  bmp32 = new FormatConvertedBitmap();
+                List<Detection> dets = ImageLibrary.Detect(filtered);
+                StringBuilder sb = new StringBuilder();
+                foreach (Detection det in dets)
+                {
+                    sb.AppendLine($"x={det.x}, y={det.y}, width={det.width}, height={det.height}");
+                }
+                MessageBox.Show(sb.ToString());
+                FormatConvertedBitmap bmp32 = new FormatConvertedBitmap();
 
                 // BitmapSource objects like FormatConvertedBitmap can only have their properties
                 // changed within a BeginInit/EndInit block.
@@ -65,7 +70,10 @@ namespace ImageAnalyzer
                 bmp32.DestinationFormat = PixelFormats.Bgr32;
                 bmp32.EndInit();
                 WriteableBitmap wbmp = new WriteableBitmap(bmp32);
-                wbmp.DrawRectangle(det.x, det.y, det.x + det.width, det.y + det.height, Colors.Red);
+                foreach (Detection det in dets)
+                {
+                    wbmp.DrawRectangle(det.x, det.y, det.x + det.width, det.y + det.height, Colors.Red);
+                }
                 imageDetected.Source = wbmp;
             }
         }
