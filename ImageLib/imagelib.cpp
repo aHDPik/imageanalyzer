@@ -19,44 +19,94 @@ namespace imagelib {
         }
     }
 
-    std::vector<Detection> detect(unsigned char* image, int width, int height)
+    std::vector<Detection> detect(unsigned char* image, int width, int height, int number)
     {
-        std::vector<Detection> objects;
-            int blue=0, green=0, red=0;
-            std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
-            std::vector<int> ourColorMax = { blue + 10, green + 10, red + 10 };
-            std::vector<int> thisColor;
-            int x1_flag = -1, y1_flag = -1, x2_flag = -1, y2_flag = -1, i;
-            bool flag_str=false;
-            for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++) {
-                    int ind = index(x, y, width);
-                    for (i = 0; i < 3; i++) {
-                        if (((int)image[ind] + i) < ourColorMin[i] || (int)(image[ind] + i) > ourColorMax[i]) {
-                            break;
-                        }
-                    }
-                    //если i=3, значит цвета похожи, если i<3, значит различны
-                    if (i == 3) {
-                        if (y1_flag == -1) {
-                            y1_flag = y;
-                            x1_flag = x;
-                            x2_flag = x;
-                        }
-                        else
-                            y2_flag = y;
+        std::vector<Detection> result;
+        int blue = 0, green = 0, red = 0;
+        std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
+        std::vector<int> ourColorMax = { blue + 10, green + 10, red + 10 };
 
-                        if (x1_flag > x)
-                            x1_flag = x;
-                        if (x2_flag < x)
-                            x2_flag = x;
-                    }
+        bool flag_strX = false, flag_strY = false, flag_objX = false, flag_objY = false;
 
+        int i;
+
+        Objects objects;
+
+        X1_X2 coordX;
+        Y1_Y2 coordY;
+
+        for (int y = 0; y < height; y++) {
+            if (!flag_objY && coordY.y1 != -1 && coordY.y2 != -1 && (coordY.y1 != coordY.y2)) {
+                objects.objectsY.push_back(coordY);
+                coordY.y1 = -1;
+                coordY.y2 = -1;
+            }
+            flag_objY = false;
+            for (int x = 0; x < width; x++) {
+                int ind = index(x, y, width);
+                for (i = 0; i < 3; i++) {
+                    if ((image[ind] + i) < ourColorMin[i] || (image[ind] + i) > ourColorMax[i]) {
+                        break;
+                    }
                 }
-            Detection res = { x1_flag ,y1_flag, x2_flag - x1_flag, y2_flag - y1_flag };
-            objects.push_back(res);
-           
-            return objects;
+
+                ///   |
+                ///   |
+                ///   |
+                ///  \/ y
+
+                //если i=3, значит цвета похожи, если i<3, значит различны
+                if (i == 3) {
+                    flag_objY = true;
+                    if (coordY.y1 == -1) {
+                        coordY.y1 = y;
+                    }
+                    else
+                        coordY.y2 = y;
+                }
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            if (!flag_objX && coordX.x1 != -1 && coordX.x2 != -1 && (coordX.x1 != coordX.x2)) {
+                objects.objectsX.push_back(coordX);
+                coordX.x1 = -1;
+                coordX.x2 = -1;
+            }
+            flag_objX = false;
+            for (int y = 0; y < height; y++) {
+                int ind = index(x, y, width);
+                for (i = 0; i < 3; i++) {
+                    if ((image[ind] + i) < ourColorMin[i] || (image[ind] + i) > ourColorMax[i]) {
+                        break;
+                    }
+                }
+
+                /// ------> x
+
+                //если i=3, значит цвета похожи, если i<3, значит различны
+                if (i == 3) {
+                    flag_objX = true;
+                    if (coordX.x1 == -1) {
+                        coordX.x1 = x;
+                    }
+                    else
+                        coordX.x2 = x;
+                }
+            }
+        }
+
+        //for (int j = 0; j < objects.objectsY.size(); j++) {
+        //    for (i = 0; i < objects.objectsX.size(); i++) {
+        //        result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
+        //    }
+        //}
+
+        for (int j = 0; j < objects.objectsY.size(); j++) {
+            for (i = 0; i < objects.objectsX.size(); i++) {
+                result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
+            }
+        }
+        return result;
     }
 
     void modify_image(unsigned char* image, int width, int height, Matrix M) {

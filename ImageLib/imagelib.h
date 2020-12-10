@@ -5,6 +5,21 @@
 
 namespace imagelib {
 
+	struct Y1_Y2 {
+		int y1 = -1;
+		int y2 = -1;
+	};
+
+	struct X1_X2 {
+		int x1 = -1;
+		int x2 = -1;
+	};
+
+	struct Objects {
+		std::vector<Y1_Y2> objectsY;
+		std::vector<X1_X2> objectsX;
+	};
+
 	struct Detection {
 		int x;
 		int y;
@@ -12,7 +27,7 @@ namespace imagelib {
 		int height;
 	};
 
-	std::vector<Detection> detect(unsigned char* image, int width, int height);
+	std::vector<Detection> detect(unsigned char* image, int width, int height, int number);
 
 	void noise(unsigned char* image, int width, int height, double percent);
 
