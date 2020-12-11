@@ -19,7 +19,7 @@ namespace imagelib {
         }
     }
 
-    std::vector<Detection> detect(unsigned char* image, int width, int height, int number)
+    std::vector<Detection> detect(unsigned char* image, int width, int height/*, int number*/)
     {
         std::vector<Detection> result;
         int blue = 0, green = 0, red = 0;
@@ -94,16 +94,33 @@ namespace imagelib {
                 }
             }
         }
-
-        //for (int j = 0; j < objects.objectsY.size(); j++) {
-        //    for (i = 0; i < objects.objectsX.size(); i++) {
-        //        result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
-        //    }
-        //}
-
+        bool flag = false;
+        int l;
         for (int j = 0; j < objects.objectsY.size(); j++) {
             for (i = 0; i < objects.objectsX.size(); i++) {
-                result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
+
+                if ((objects.objectsX[i].x2 - objects.objectsX[i].x1) * (objects.objectsY[j].y2 - objects.objectsY[j].y1) > 500) {
+                    for (int x = objects.objectsX[i].x1; x < objects.objectsX[i].x2; x++) {
+                        for (int y = objects.objectsY[j].y1; y < objects.objectsY[j].y2; y++) {
+                            int ind = index(x, y, width);
+                            for (l = 0; l < 3; l++) {
+                                if ((image[ind] + l) < ourColorMin[l] || (image[ind] + l) > ourColorMax[l]) {
+                                    break;
+                                }
+                            }
+                            if (l == 3) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+
             }
         }
         return result;
