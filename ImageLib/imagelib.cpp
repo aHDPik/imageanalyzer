@@ -21,6 +21,10 @@ namespace imagelib {
 
     std::vector<Detection> detect(unsigned char* image, int width, int height/*, int number*/)
     {
+
+        int minCountPicsel = 20;//минимальное кол-во пикселей нужного цвета в области
+        int minSquare = 100;//минимальный размер выделенной области
+
         std::vector<Detection> result;
         int blue = 0, green = 0, red = 0;
         std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
@@ -95,11 +99,13 @@ namespace imagelib {
             }
         }
         bool flag = false;
+        int counter = 0;//счетчик кол-ва нужных пикселей в области
         int l;
         for (int j = 0; j < objects.objectsY.size(); j++) {
             for (i = 0; i < objects.objectsX.size(); i++) {
 
-                if ((objects.objectsX[i].x2 - objects.objectsX[i].x1) * (objects.objectsY[j].y2 - objects.objectsY[j].y1) > 500) {
+                if ((objects.objectsX[i].x2 - objects.objectsX[i].x1) * (objects.objectsY[j].y2 - objects.objectsY[j].y1) > minSquare) {
+                    counter = 0;
                     for (int x = objects.objectsX[i].x1; x < objects.objectsX[i].x2; x++) {
                         for (int y = objects.objectsY[j].y1; y < objects.objectsY[j].y2; y++) {
                             int ind = index(x, y, width);
@@ -109,13 +115,13 @@ namespace imagelib {
                                 }
                             }
                             if (l == 3) {
-                                flag = true;
+                                counter++;
                                 break;
                             }
                         }
-                        if (flag) {
+                        if (counter==minCountPicsel) {
                             result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
-                            flag = false;
+                            counter = 0;
                             break;
                         }
                     }
