@@ -51,7 +51,7 @@ namespace ImageAnalyzer
                 m.arr1 = m1Tb.Text.Split(',').ToList().ConvertAll(n => double.Parse(n, CultureInfo.InvariantCulture)).ToArray();
                 m.arr2 = m2Tb.Text.Split(',').ToList().ConvertAll(n => double.Parse(n, CultureInfo.InvariantCulture)).ToArray();
 
-                WriteableBitmap filtered = ImageLibrary.ApplyMatrix(noised, m);
+                WriteableBitmap filtered = ImageLibrary.ApplyMatrix(binabinarizated, m);
                 imageFiltered.Source = filtered;
 
                 List<Detection> dets = ImageLibrary.Detect(filtered, int.Parse(minCountPicselTb.Text),int.Parse(minSquareTb.Text));

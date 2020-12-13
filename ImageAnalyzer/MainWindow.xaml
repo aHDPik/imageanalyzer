@@ -38,15 +38,15 @@
             <TextBlock Padding="1">
                 Матрица 1
             </TextBlock>
-            <TextBox Name="m1Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.3,0.3</TextBox>
+            <TextBox Name="m1Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.4,0.3</TextBox>
             <TextBlock Padding="1">
                 Матрица 2
             </TextBlock>
-            <TextBox Name="m2Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.3,0.3</TextBox>
+            <TextBox Name="m2Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.4,0.3</TextBox>
             <TextBlock Padding="1">
                 Пикселей в области
             </TextBlock>
-            <TextBox Name="minCountPicselTb" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">20</TextBox>
+            <TextBox Name="minCountPicselTb" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">10</TextBox>
             <TextBlock Padding="1">
                 Размер выделенной области
             </TextBlock>
@@ -54,9 +54,9 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
             <TextBlock Padding="1">
-                Граница бинаризации
+                Граница бинаризации в bgr
             </TextBlock>
-            <TextBox Name="binTb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">127,127,127</TextBox>
+            <TextBox Name="binTb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">54,37,172</TextBox>
         </StackPanel>
     </Grid>
 </Window>

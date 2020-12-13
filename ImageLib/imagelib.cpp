@@ -20,24 +20,27 @@ namespace imagelib {
     }
 
     void binarization(unsigned char* image, int width, int height, std::vector<int> color) {
-        std::vector<int> ourColorMin = { color[0] - 10, color[1] - 10, color[2] - 10 };
-        std::vector<int> ourColorMax = { color[0] + 10, color[1] + 10, color[2] + 10 };
+
+        std::vector<int> ourColorMin = { color[0] - 30, color[1] - 30, color[2] - 30 };
+        std::vector<int> ourColorMax = { color[0] + 30, color[1] + 30, color[2] + 30 };
+
         int i;
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int ind = index(x, y, width);
                 for (i = 0; i < 3; i++) {
                     if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
                         break;
                     }
                 }
-                if (i == 3)
-                    for (i = 0; i < 3; i++) {
-                        image[ind + i] = 0;
+                if (i == 3) {
+                    for (int j = 0; j < 3; j++) {
+                        image[ind + j] = 0;
                     }
+                }
                 else {
-                    for (i = 0; i < 3; i++) {
-                        image[ind + i] = 255;
+                    for (int j = 0; j < 3; j++) {
+                        image[ind + j] = 255;
                     }
                 }
             }

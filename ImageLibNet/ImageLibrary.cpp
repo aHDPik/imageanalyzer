@@ -106,6 +106,7 @@ namespace ImageLib {
 		for each (int pixel in color)
 			colorNative.push_back(pixel);
 		imagelib::binarization(pixelsNative, img->PixelWidth, img->PixelHeight, colorNative);
+
 		WriteableBitmap^ res = gcnew WriteableBitmap(img->PixelWidth, img->PixelHeight, 92, 92, PixelFormats::Bgr24, nullptr);
 		res->WritePixels(System::Windows::Int32Rect(0, 0, img->PixelWidth, img->PixelHeight), pixels, img->PixelWidth * 3, 0);
 		return res;
