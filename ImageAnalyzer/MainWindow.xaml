@@ -23,8 +23,8 @@
                 <MenuItem Header="Открыть..." Name="openFileMenu" Click="openFileMenu_Click"/>
             </MenuItem>
         </Menu>
-        <Image Name="image" Grid.Row="2" Grid.Column="0"/>
-        <Image Name="imageNoised" Grid.Row="2" Grid.Column="1"/>
+        <Image Name="imageNoised" Grid.Row="2" Grid.Column="0"/>
+        <Image Name="imageBinarizated" Grid.Row="2" Grid.Column="1"/>
         <Image Name="imageFiltered" Grid.Row="2" Grid.Column="2"/>
         <Image Name="imageDetected" Grid.Row="2" Grid.Column="3"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
