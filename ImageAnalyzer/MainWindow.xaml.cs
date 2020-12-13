@@ -37,11 +37,14 @@ namespace ImageAnalyzer
             if (ofd.ShowDialog().Value)
             {
                 img = new WriteableBitmap(new BitmapImage(new Uri(ofd.FileName)));
+                image.Source = img;
                 double percent = double.Parse(noiseTb.Text, CultureInfo.InvariantCulture);
                 WriteableBitmap noised = ImageLibrary.Noise(img, percent);
                 imageNoised.Source = noised;
 
-                WriteableBitmap binabinarizated = ImageLibrary.Binarization(noised, /*ТУТ НУЖНО ДОБАВИТЬ ЦВЕТ(В ВИДЕ std::vector<int>), КОТОРЫЕ МЫ БУДЕМ ИСКАТЬ*/);
+                List<int> color = binTb.Text.Split(',').ToList().ConvertAll(c => int.Parse(c));
+
+                WriteableBitmap binabinarizated = ImageLibrary.Binarization(noised, color);
                 imageBinarizated.Source = binabinarizated;
 
                 ImageLib.Matrix m = new ImageLib.Matrix();

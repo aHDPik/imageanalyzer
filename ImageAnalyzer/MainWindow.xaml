@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -17,17 +18,19 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть..." Name="openFileMenu" Click="openFileMenu_Click"/>
             </MenuItem>
         </Menu>
-        <Image Name="imageNoised" Grid.Row="2" Grid.Column="0"/>
-        <Image Name="imageBinarizated" Grid.Row="2" Grid.Column="1"/>
-        <Image Name="imageFiltered" Grid.Row="2" Grid.Column="2"/>
-        <Image Name="imageDetected" Grid.Row="2" Grid.Column="3"/>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
+        <Image Name="image" Grid.Row="3" Grid.Column="0"/>
+        <Image Name="imageNoised" Grid.Row="3" Grid.Column="1"/>
+        <Image Name="imageBinarizated" Grid.Row="3" Grid.Column="2"/>
+        <Image Name="imageFiltered" Grid.Row="3" Grid.Column="3"/>
+        <Image Name="imageDetected" Grid.Row="3" Grid.Column="4"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
             <TextBlock Padding="1">
                 Процент шума
             </TextBlock>
@@ -48,6 +51,12 @@
                 Размер выделенной области
             </TextBlock>
             <TextBox Name="minSquareTb" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">100</TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
+            <TextBlock Padding="1">
+                Граница бинаризации
+            </TextBlock>
+            <TextBox Name="binTb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">127,127,127</TextBox>
         </StackPanel>
     </Grid>
 </Window>

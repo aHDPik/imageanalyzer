@@ -93,7 +93,7 @@ namespace ImageLib {
 		return res;
 	}
 
-	System::Windows::Media::Imaging::WriteableBitmap^ ImageLibrary::Binarization(System::Windows::Media::Imaging::WriteableBitmap^ img, std::vector<int> color)
+	System::Windows::Media::Imaging::WriteableBitmap^ ImageLibrary::Binarization(System::Windows::Media::Imaging::WriteableBitmap^ img, List<int>^ color)
 	{
 		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
 		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
@@ -102,9 +102,12 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
-		imagelib::binarization(pixelsNative, img->PixelWidth, img->PixelHeight, color);
+		std::vector<int> colorNative;
+		for each (int pixel in color)
+			colorNative.push_back(pixel);
+		imagelib::binarization(pixelsNative, img->PixelWidth, img->PixelHeight, colorNative);
 		WriteableBitmap^ res = gcnew WriteableBitmap(img->PixelWidth, img->PixelHeight, 92, 92, PixelFormats::Bgr24, nullptr);
-		//res->WritePixels(System::Windows::Int32Rect(0, 0, img->PixelWidth, img->PixelHeight), pixels, img->PixelWidth * 3, 0);
+		res->WritePixels(System::Windows::Int32Rect(0, 0, img->PixelWidth, img->PixelHeight), pixels, img->PixelWidth * 3, 0);
 		return res;
 	}
 }

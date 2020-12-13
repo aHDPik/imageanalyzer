@@ -26,7 +26,7 @@ namespace ImageLib {
 		static System::Collections::Generic::List<Detection>^ Detect(System::Windows::Media::Imaging::WriteableBitmap^ img, int minCountPicsel, int minSquare);
 		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
 		static System::Windows::Media::Imaging::WriteableBitmap^ ApplyMatrix(System::Windows::Media::Imaging::WriteableBitmap^ img, Matrix m);
-		static System::Windows::Media::Imaging::WriteableBitmap^ Binarization(System::Windows::Media::Imaging::WriteableBitmap^ img, std::vector<int> color);
+		static System::Windows::Media::Imaging::WriteableBitmap^ Binarization(System::Windows::Media::Imaging::WriteableBitmap^ img, System::Collections::Generic::List<int>^ color);
 	};
 
 }
