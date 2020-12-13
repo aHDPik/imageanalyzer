@@ -1,4 +1,4 @@
-#pragma once
+}#pragma once
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -28,6 +28,8 @@ namespace imagelib {
 	};
 
 	std::vector<Detection> detect(unsigned char* image, int width, int height, int minCountPicsel, int minSquare);
+
+	void binarization(unsigned char* image, int width, int height, std::vector<int> color);
 
 	void noise(unsigned char* image, int width, int height, double percent);
 

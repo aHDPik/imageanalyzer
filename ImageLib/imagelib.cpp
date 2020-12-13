@@ -19,6 +19,32 @@ namespace imagelib {
         }
     }
 
+    void binarization(unsigned char* image, int width, int height, std::vector<int> color) {
+        std::vector<int> ourColorMin = { color[0] - 10, color[1] - 10, color[2] - 10 };
+        std::vector<int> ourColorMax = { color[0] + 10, color[1] + 10, color[2] + 10 };
+        int i;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int ind = index(x, y, width);
+                for (i = 0; i < 3; i++) {
+                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
+                        break;
+                    }
+                }
+                if (i == 3)
+                    for (i = 0; i < 3; i++) {
+                        image[ind + i] = 0;
+                    }
+                else {
+                    for (i = 0; i < 3; i++) {
+                        image[ind + i] = 255;
+                    }
+                }
+            }
+        }
+    }
+
+
     std::vector<Detection> detect(unsigned char* image, int width, int height, int minCountPicsel, int minSquare)
     {
 
@@ -49,7 +75,7 @@ namespace imagelib {
             for (int x = 0; x < width; x++) {
                 int ind = index(x, y, width);
                 for (i = 0; i < 3; i++) {
-                    if ((image[ind] + i) < ourColorMin[i] || (image[ind] + i) > ourColorMax[i]) {
+                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
                         break;
                     }
                 }
@@ -80,7 +106,7 @@ namespace imagelib {
             for (int y = 0; y < height; y++) {
                 int ind = index(x, y, width);
                 for (i = 0; i < 3; i++) {
-                    if ((image[ind] + i) < ourColorMin[i] || (image[ind] + i) > ourColorMax[i]) {
+                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
                         break;
                     }
                 }
@@ -110,7 +136,7 @@ namespace imagelib {
                         for (int y = objects.objectsY[j].y1; y < objects.objectsY[j].y2; y++) {
                             int ind = index(x, y, width);
                             for (l = 0; l < 3; l++) {
-                                if ((image[ind] + l) < ourColorMin[l] || (image[ind] + l) > ourColorMax[l]) {
+                                if ((image[ind + l]) < ourColorMin[l] || (image[ind + l]) > ourColorMax[l]) {
                                     break;
                                 }
                             }
