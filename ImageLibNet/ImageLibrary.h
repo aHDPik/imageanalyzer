@@ -23,7 +23,7 @@ namespace ImageLib {
 	private:
 		static System::Windows::Media::Imaging::FormatConvertedBitmap^ ToBgr24(System::Windows::Media::Imaging::WriteableBitmap^ img);
 	public:
-		static System::Collections::Generic::List<Detection>^ Detect(System::Windows::Media::Imaging::WriteableBitmap^ img);
+		static System::Collections::Generic::List<Detection>^ Detect(System::Windows::Media::Imaging::WriteableBitmap^ img, int minCountPicsel, int minSquare);
 		static System::Windows::Media::Imaging::WriteableBitmap^ Noise(System::Windows::Media::Imaging::WriteableBitmap^ img, double percent);
 		static System::Windows::Media::Imaging::WriteableBitmap^ ApplyMatrix(System::Windows::Media::Imaging::WriteableBitmap^ img, Matrix m);
 	};

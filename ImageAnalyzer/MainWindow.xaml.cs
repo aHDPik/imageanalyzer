@@ -49,7 +49,7 @@ namespace ImageAnalyzer
                 WriteableBitmap filtered = ImageLibrary.ApplyMatrix(noised, m);
                 imageFiltered.Source = filtered;
 
-                List<Detection> dets = ImageLibrary.Detect(filtered);
+                List<Detection> dets = ImageLibrary.Detect(filtered, int.Parse(minCountPicselTb.Text),int.Parse(minSquareTb.Text));
                 StringBuilder sb = new StringBuilder();
                 foreach (Detection det in dets)
                 {

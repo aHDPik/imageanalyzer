@@ -40,6 +40,14 @@
                 Матрица 2
             </TextBlock>
             <TextBox Name="m2Tb" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.3,0.3,0.3</TextBox>
+            <TextBlock Padding="1">
+                Пикселей в области
+            </TextBlock>
+            <TextBox Name="minCountPicselTb" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">20</TextBox>
+            <TextBlock Padding="1">
+                Размер выделенной области
+            </TextBlock>
+            <TextBox Name="minSquareTb" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">100</TextBox>
         </StackPanel>
     </Grid>
 </Window>

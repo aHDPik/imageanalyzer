@@ -19,11 +19,11 @@ namespace imagelib {
         }
     }
 
-    std::vector<Detection> detect(unsigned char* image, int width, int height/*, int number*/)
+    std::vector<Detection> detect(unsigned char* image, int width, int height, int minCountPicsel, int minSquare)
     {
 
-        int minCountPicsel = 20;//минимальное кол-во пикселей нужного цвета в области
-        int minSquare = 100;//минимальный размер выделенной области
+        //int minCountPicsel = 20;//минимальное кол-во пикселей нужного цвета в области
+        //int minSquare = 100;//минимальный размер выделенной области
 
         std::vector<Detection> result;
         int blue = 0, green = 0, red = 0;

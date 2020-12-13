@@ -26,7 +26,7 @@ namespace ImageLib {
 		return bgr24;
 	}
 
-	List<Detection>^ ImageLibrary::Detect(WriteableBitmap^ img)
+	List<Detection>^ ImageLibrary::Detect(WriteableBitmap^ img, int minCountPicsel, int minSquare)
 	{
 		FormatConvertedBitmap^ bgr24 = ToBgr24(img);
 		array<unsigned char>^ pixels = gcnew array<unsigned char>(img->PixelHeight * img->PixelWidth * 3);
@@ -35,7 +35,7 @@ namespace ImageLib {
 		pin_ptr<unsigned char> pixelsPin = &pixels[0];
 		unsigned char* pixelsNative = pixelsPin;
 
-		std::vector<imagelib::Detection> resArr = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight);
+		std::vector<imagelib::Detection> resArr = imagelib::detect(pixelsNative, img->PixelWidth, img->PixelHeight, minCountPicsel, minSquare);
 		List<Detection>^ outArr = gcnew List<Detection>();
 		for (int i = 0; i < resArr.size(); i++) {
 			Detection out;
