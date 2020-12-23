@@ -21,8 +21,8 @@ namespace imagelib {
 
     void binarization(unsigned char* image, int width, int height, std::vector<int> color) {
 
-        std::vector<int> ourColorMin = { color[0] - 30, color[1] - 30, color[2] - 30 };
-        std::vector<int> ourColorMax = { color[0] + 30, color[1] + 30, color[2] + 30 };
+        std::vector<int> ourColorMin = { color[0] - 50, color[1] - 50, color[2] - 50 };
+        std::vector<int> ourColorMax = { color[0] + 50, color[1] + 50, color[2] + 50 };
 
         int i;
         for (int x = 0; x < width; x++) {
@@ -50,75 +50,51 @@ namespace imagelib {
 
     std::vector<Detection> detect(unsigned char* image, int width, int height, int minCountPicsel, int minSquare)
     {
-
-        //int minCountPicsel = 20;//минимальное кол-во пикселей нужного цвета в области
-        //int minSquare = 100;//минимальный размер выделенной области
-
         std::vector<Detection> result;
-        int blue = 0, green = 0, red = 0;
-        std::vector<int> ourColorMin = { blue - 10, green - 10, red - 10 };
-        std::vector<int> ourColorMax = { blue + 10, green + 10, red + 10 };
-
-        bool flag_strX = false, flag_strY = false, flag_objX = false, flag_objY = false;
-
+        std::vector<int> ourColorMin = { -1, -1, -1 };
+        std::vector<int> ourColorMax = { 1, 1, 1 };
+        bool flag = false;
         int i;
-
         Objects objects;
-
         X1_X2 coordX;
         Y1_Y2 coordY;
 
         for (int y = 0; y < height; y++) {
-            if (!flag_objY && coordY.y1 != -1 && coordY.y2 != -1 && (coordY.y1 != coordY.y2)) {
+            if (!flag && coordY.y1 != -1 && coordY.y2 != -1 && (coordY.y1 != coordY.y2)) {
                 objects.objectsY.push_back(coordY);
                 coordY.y1 = -1;
                 coordY.y2 = -1;
             }
-            flag_objY = false;
+            flag = false;
             for (int x = 0; x < width; x++) {
                 int ind = index(x, y, width);
-                for (i = 0; i < 3; i++) {
-                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
+                for (i = 0; i < 3; i++)
+                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i])
                         break;
-                    }
-                }
-
-                ///   |
-                ///   |
-                ///   |
-                ///  \/ y
-
-                //если i=3, значит цвета похожи, если i<3, значит различны
                 if (i == 3) {
-                    flag_objY = true;
-                    if (coordY.y1 == -1) {
+                    flag = true;
+                    if (coordY.y1 == -1)
                         coordY.y1 = y;
-                    }
                     else
                         coordY.y2 = y;
                 }
             }
         }
+        flag = false;
         for (int x = 0; x < width; x++) {
-            if (!flag_objX && coordX.x1 != -1 && coordX.x2 != -1 && (coordX.x1 != coordX.x2)) {
+            if (!flag && coordX.x1 != -1 && coordX.x2 != -1 && (coordX.x1 != coordX.x2)) {
                 objects.objectsX.push_back(coordX);
                 coordX.x1 = -1;
                 coordX.x2 = -1;
             }
-            flag_objX = false;
+            flag = false;
             for (int y = 0; y < height; y++) {
                 int ind = index(x, y, width);
-                for (i = 0; i < 3; i++) {
-                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i]) {
+                for (i = 0; i < 3; i++)
+                    if ((image[ind + i]) < ourColorMin[i] || (image[ind + i]) > ourColorMax[i])
                         break;
-                    }
-                }
-
-                /// ------> x
-
-                //если i=3, значит цвета похожи, если i<3, значит различны
                 if (i == 3) {
-                    flag_objX = true;
+                    flag = true;
                     if (coordX.x1 == -1) {
                         coordX.x1 = x;
                     }
@@ -127,37 +103,31 @@ namespace imagelib {
                 }
             }
         }
-        bool flag = false;
+
         int counter = 0;//счетчик кол-ва нужных пикселей в области
         int l;
-        for (int j = 0; j < objects.objectsY.size(); j++) {
-            for (i = 0; i < objects.objectsX.size(); i++) {
-
+        for (int j = 0; j < objects.objectsY.size(); j++)
+            for (i = 0; i < objects.objectsX.size(); i++)
                 if ((objects.objectsX[i].x2 - objects.objectsX[i].x1) * (objects.objectsY[j].y2 - objects.objectsY[j].y1) > minSquare) {
                     counter = 0;
                     for (int x = objects.objectsX[i].x1; x < objects.objectsX[i].x2; x++) {
                         for (int y = objects.objectsY[j].y1; y < objects.objectsY[j].y2; y++) {
                             int ind = index(x, y, width);
-                            for (l = 0; l < 3; l++) {
-                                if ((image[ind + l]) < ourColorMin[l] || (image[ind + l]) > ourColorMax[l]) {
+                            for (l = 0; l < 3; l++)
+                                if ((image[ind + l]) < ourColorMin[l] || (image[ind + l]) > ourColorMax[l])
                                     break;
-                                }
-                            }
                             if (l == 3) {
                                 counter++;
                                 break;
                             }
                         }
-                        if (counter==minCountPicsel) {
+                        if (counter == minCountPicsel) {
                             result.push_back({ objects.objectsX[i].x1, objects.objectsY[j].y1, objects.objectsX[i].x2 - objects.objectsX[i].x1, objects.objectsY[j].y2 - objects.objectsY[j].y1 });
                             counter = 0;
                             break;
                         }
                     }
                 }
-
-            }
-        }
         return result;
     }
 
@@ -232,9 +202,9 @@ namespace imagelib {
     }
 
     unsigned char clamp(double val) {
-        if (val < 0)
+        if (val <= 150)
             return 0;
-        if (val > 255)
+        if (val > 150)
             return 255;
         return (unsigned char)val;
     }

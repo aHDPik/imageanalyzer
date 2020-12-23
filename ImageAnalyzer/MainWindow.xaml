@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageAnalyzer"
         mc:Ignorable="d"
-        Title="Анализатор изображений" Height="450" Width="800">
+        Title="Анализатор изображений" Height="900" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
@@ -27,14 +27,14 @@
         </Menu>
         <Image Name="image" Grid.Row="3" Grid.Column="0"/>
         <Image Name="imageNoised" Grid.Row="3" Grid.Column="1"/>
-        <Image Name="imageBinarizated" Grid.Row="3" Grid.Column="2"/>
-        <Image Name="imageFiltered" Grid.Row="3" Grid.Column="3"/>
-        <Image Name="imageDetected" Grid.Row="3" Grid.Column="4"/>
+        <Image Name="imageBinarizated" Grid.Row="4" Grid.Column="0"/>
+        <Image Name="imageFiltered" Grid.Row="4" Grid.Column="1"/>
+        <Image Name="imageDetected" Grid.Row="5" Grid.ColumnSpan="2" Margin="221,0,225.6,0.4"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal">
             <TextBlock Padding="1">
                 Процент шума
             </TextBlock>
-            <TextBox Name="noiseTb" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0.1</TextBox>
+            <TextBox Name="noiseTb" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">2.5</TextBox>
             <TextBlock Padding="1">
                 Матрица 1
             </TextBlock>
